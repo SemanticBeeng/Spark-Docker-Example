@@ -22,11 +22,12 @@ object SparkApplication {
     val dbUser = "nick"
     val dbPassword = "readonlySQL"
 
-    println("trying to connect")
-    Class.forName(driver)
-    import java.sql.DriverManager
-    val connection = DriverManager.getConnection(url, dbUser, dbPassword)
-    println("connected")
+//    println("trying to connect")
+//    Class.forName(driver)
+//    import java.sql.DriverManager
+//    val connection = DriverManager.getConnection(url, dbUser, dbPassword)
+//    throw new Exception("Worked!")
+//    println("connected")
 
     val concepts = sparkSession.sqlContext.read.
       format("jdbc").
