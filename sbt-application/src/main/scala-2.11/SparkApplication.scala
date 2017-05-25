@@ -1,5 +1,4 @@
-import org.apache.spark.sql.SparkSession
-import scala.math.random
+import org.apache.spark.sql.{Row, SparkSession}
 
 /**
   * Sample Spark application.
@@ -17,16 +16,23 @@ object SparkApplication {
 
     val n = 2950000
 
-    val pointsRdd = sparkSession.sparkContext.parallelize(1 to n)
-      .map(_ => Point(random * 2 - 1, random * 2 - 1, random * 2 - 1))
+    val concepts = sparkSession.sqlContext.read.
+      format("jdbc").
+      option("url", "jdbc:mysql://ds-db6.scivulcan.com/core_db").
+      option("driver", "com.mysql.jdbc.Driver").
+      //option("dbtable", "concept").
+      option("user", "nick").
+      option("password", "readonly").load()
 
-    val pointsInsideSphereRdd =
-      pointsRdd.filter(point => point.x * point.x + point.y * point.y + point.z * point.z <= 1)
+    import sparkSession.sqlContext.implicits._
+    def inspect(r: Row): (Long, String) = {
+      val id = r.getLong(0)
+      val name = r.getString(1)
+      println(s"$id = $name")
+      (id, name)
+    }
 
-    val insideToAllRatio = pointsInsideSphereRdd.count().toDouble / pointsRdd.count().toDouble
-    val cubeSize = 2 * 2 * 2
-
-    println(s"Result: ${insideToAllRatio * cubeSize}")
+    concepts.sqlContext.sql("select * from concept").map(inspect)
     sparkSession.stop()
   }
 }
