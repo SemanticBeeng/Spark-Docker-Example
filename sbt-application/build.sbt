@@ -68,10 +68,8 @@ dockerfile in docker := {
 
   val sparkHome = "/home/spark"
   val imageAppBaseDir = "/app"
-  val artifactTargetPath = s"$imageAppBaseDir/${artifact.name}"
-
-  val dockerResourcesDir = baseDir / "docker-resources"
   val dockerResourcesTargetPath = s"$imageAppBaseDir/"
+  val mysqlJdbcJar = "http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar"
 
   new Dockerfile {
     from("semantive/spark")
@@ -79,8 +77,12 @@ dockerfile in docker := {
     env("APP_BASE", s"$imageAppBaseDir")
     env("APP_CLASS", mainClassString)
     env("SPARK_HOME", sparkHome)
-    copy(artifact, artifactTargetPath)
-    copy(dockerResourcesDir, dockerResourcesTargetPath)
+    // add Spark JDBC dependencies
+    addRaw(mysqlJdbcJar, s"$sparkHome/jars")
+    // copy application
+    copy(artifact, s"$imageAppBaseDir/${artifact.name}")
+    // copy Docker stuff
+    copy(baseDir / "docker-resources", dockerResourcesTargetPath)
     //Symlink the service jar to a non version specific name
     entryPoint(s"${dockerResourcesTargetPath}docker-entrypoint.sh")
   }
