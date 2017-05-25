@@ -11,18 +11,30 @@ object SparkApplication {
   def main(args: Array[String]): Unit = {
     val sparkSession = SparkSession
       .builder
-      .appName("Spark Pi")
+      .appName("core_db migrate")
       .getOrCreate()
 
-    val n = 2950000
+    val driver = "com.mysql.jdbc.Driver"
+    val dbHostname = "ds-db6.scivulcan.com"
+    val dbPort = "3306"
+    val dbName = "core_db"
+    val url = s"jdbc:mysql://$dbHostname:$dbPort/$dbName"
+    val dbUser = "nick"
+    val dbPassword = "readonlySQL"
+
+    println("trying to connect")
+    Class.forName(driver)
+    import java.sql.DriverManager
+    val connection = DriverManager.getConnection(url, dbUser, dbPassword)
+    println("connected")
 
     val concepts = sparkSession.sqlContext.read.
       format("jdbc").
-      option("url", "jdbc:mysql://ds-db6.scivulcan.com:3306/core_db").
-      option("driver", "com.mysql.jdbc.Driver").
+      option("driver", driver).
+      option("url", url).
       option("dbtable", "concept").
       option("user", "nick").
-      option("password", "readonly").load()
+      option("password", "readonlySQL").load()
 
     import sparkSession.sqlContext.implicits._
     def inspect(r: Row): (Long, String) = {
