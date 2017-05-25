@@ -18,9 +18,9 @@ object SparkApplication {
 
     val concepts = sparkSession.sqlContext.read.
       format("jdbc").
-      option("url", "jdbc:mysql://ds-db6.scivulcan.com/core_db").
+      option("url", "jdbc:mysql://ds-db6.scivulcan.com:3306/core_db").
       option("driver", "com.mysql.jdbc.Driver").
-      //option("dbtable", "concept").
+      option("dbtable", "concept").
       option("user", "nick").
       option("password", "readonly").load()
 
@@ -32,7 +32,7 @@ object SparkApplication {
       (id, name)
     }
 
-    concepts.sqlContext.sql("select * from concept").map(inspect)
+    concepts.sqlContext.sql("select * from concept")/*.toDF("id", "name")*/.map(inspect)
     sparkSession.stop()
   }
 }
