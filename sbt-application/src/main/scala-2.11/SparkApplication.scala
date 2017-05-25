@@ -33,7 +33,7 @@ object SparkApplication {
       format("jdbc").
       option("driver", driver).
       option("url", url).
-      option("dbtable", "concept").
+      option("dbtable", "(select * from concept) as concept").
       option("user", "nick").
       option("password", "readonlySQL").load()
 
