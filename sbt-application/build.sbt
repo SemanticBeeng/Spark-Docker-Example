@@ -69,7 +69,7 @@ dockerfile in docker := {
   val sparkHome = "/home/spark"
   val imageAppBaseDir = "/app"
   val dockerResourcesTargetPath = s"$imageAppBaseDir/"
-  val mysqlJdbcJar = "http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar"
+  val mysqlJdbcJar = new java.net.URL("http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar")
 
   new Dockerfile {
     from("semantive/spark")
@@ -78,7 +78,7 @@ dockerfile in docker := {
     env("APP_CLASS", mainClassString)
     env("SPARK_HOME", sparkHome)
     // add Spark JDBC dependencies
-    addRaw(mysqlJdbcJar, s"$sparkHome/jars")
+    runRaw(s"wget -P$sparkHome/jars $mysqlJdbcJar")
     // copy application
     copy(artifact, s"$imageAppBaseDir/${artifact.name}")
     // copy Docker stuff
