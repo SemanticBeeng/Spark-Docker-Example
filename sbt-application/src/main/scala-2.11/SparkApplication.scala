@@ -1,3 +1,5 @@
+import java.util.Properties
+
 import org.apache.spark.sql.{Row, SparkSession}
 
 /**
@@ -29,23 +31,32 @@ object SparkApplication {
 //    throw new Exception("Worked!")
 //    println("connected")
 
-    val concepts = sparkSession.sqlContext.read.
-      format("jdbc").
-      option("driver", driver).
-      option("url", url).
-      option("dbtable", "(select * from concept) as concept").
-      option("user", "nick").
-      option("password", "readonlySQL").load()
+    val props = new Properties()
+    props.put("user", dbUser)
+    props.put("password", dbPassword)
+    val predicates = new Array[String](1)
+    predicates(0) = "id % 100 = 3"
+    val concepts = sparkSession.sqlContext.read.jdbc(url, "core_db.concept", predicates, props)
+//      option("driver", driver).
+//      option("url", url).
+//      option("dbtable", "(select * from concept) as concept").
+//      option("user", "nick").
+//      option("password", "readonlySQL").load()
 
-    import sparkSession.sqlContext.implicits._
-    def inspect(r: Row): (Long, String) = {
-      val id = r.getLong(0)
-      val name = r.getString(1)
-      println(s"$id = $name")
-      (id, name)
-    }
+//    import sparkSession.sqlContext.implicits._
+//    def inspect(r: Row): (Long, String) = {
+//      val id = r.getLong(0)
+//      val name = r.getString(1)
+//      println(s"$id = $name")
+//      (id, name)
+//    }
 
-    concepts.sqlContext.sql("select * from concept")/*.toDF("id", "name")*/.map(inspect)
+    /**
+      * https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/SQLDataSourceExample.scala#L50
+      */
+    val df = concepts.sqlContext.sql("select * from core_db.concept")
+    df.write.format("parquet").save("concept.parquet")
+        //.map(inspect)
     sparkSession.stop()
   }
 }
