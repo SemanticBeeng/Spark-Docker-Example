@@ -25,11 +25,11 @@ object SparkApplication {
       .getOrCreate()
 
     val driver = "com.mysql.cj.jdbc.Driver"
-    val dbHostname = "ds-db6.scivulcan.com"
+    val dbHostname = "ds-db3.scivulcan.com"
     val dbPort = "3306"
     val dbName = "core_db"
     val url = s"jdbc:mysql://$dbHostname:$dbPort"
-    val dbUser = "nick"
+    val dbUser = "readonly"
     val dbPassword = "readonlySQL"
 
     val props = new Properties()
