@@ -37,7 +37,7 @@ object SparkApplication {
       option("user", "nick").
       option("password", "readonlySQL").
         load()
-    concepts.createGlobalTempView("concept")
+    //concepts.createGlobalTempView("concept")
     println(s"Connected to $url")
 
 //    import sparkSession.sqlContext.implicits._
@@ -48,7 +48,6 @@ object SparkApplication {
 //      (id, name)
 //    }
 
-    import concepts.sqlContext.implicits._
     /**
       * https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/SQLDataSourceExample.scala#L50
       */
