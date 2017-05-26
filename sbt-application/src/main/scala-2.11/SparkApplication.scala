@@ -41,7 +41,7 @@ object SparkApplication {
       sparkSession.sqlContext.read.format("jdbc").
       option("driver", driver).
       option("url", url).
-      option("dbtable", s"select * from $dbName.concept").
+      option("dbtable", s"$dbName.concept").
       option("user", "nick").
       option("password", "readonlySQL").
         load()
