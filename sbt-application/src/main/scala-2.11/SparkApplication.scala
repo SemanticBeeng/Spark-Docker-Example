@@ -14,9 +14,9 @@ object SparkApplication {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       // 4 workers
-      .set("spark.executor.instances", "1")
+      .set("spark.executor.instances", "3")
       // 5 cores on each workers
-      .set("spark.executor.cores", "4");
+      .set("spark.executor.cores", "10");
 
     val sparkSession = SparkSession
       .builder
@@ -25,7 +25,7 @@ object SparkApplication {
       .getOrCreate()
 
     val driver = "com.mysql.cj.jdbc.Driver"
-    val dbHostname = "ds-db6.scivulcan.com"
+    val dbHostname = "ds-db3.scivulcan.com"
     val dbPort = "3306"
     val dbName = "core_db"
     val url = s"jdbc:mysql://$dbHostname:$dbPort"
