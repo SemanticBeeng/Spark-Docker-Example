@@ -49,8 +49,8 @@ object SparkApplication {
     /**
       * https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/SQLDataSourceExample.scala#L50
       */
-//    val df = concepts.sqlContext.sql("select * from concept")
-//    df.write.format("parquet").save("concept.parquet")
+    val df = concepts.sqlContext.sql("select * from core_db.concept")
+    df.write.format("parquet").save("concept.parquet")
         //.map(inspect)
     sparkSession.stop()
   }
