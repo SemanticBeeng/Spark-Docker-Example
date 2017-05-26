@@ -53,20 +53,21 @@ object SparkApplication {
     //concepts.createGlobalTempView("concept")
     println(s"Connected to $url")
 
-    import sparkSession.sqlContext.implicits._
-    def inspect(r: Row): Unit = {
-      val id = r.getInt(0)
-      val name = r.getString(1)
-      println(s"$id = $name")
-      //(id, name)
-    }
+//    import sparkSession.sqlContext.implicits._
+//    def inspect(r: Row): Unit = {
+//      val id = r.getInt(0)
+//      val name = r.getString(1)
+//      println(s"$id = $name")
+//      //(id, name)
+//    }
 
     /**
       * https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/SQLDataSourceExample.scala#L50
       */
     //val df = concepts.sqlContext.sql("select * from concept")
     println(s"Started query at ${System.currentTimeMillis()}")
-    concepts.foreach(inspect(_))//.write.format("parquet").save("concept.parquet")
+    //concepts.foreach(inspect(_))//.write.format("parquet").save("concept.parquet")
+    concepts.write.format("parquet").save("concept.parquet")
     println(s"Finished query at ${System.currentTimeMillis()}")
     sparkSession.stop()
   }
