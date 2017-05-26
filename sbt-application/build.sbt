@@ -13,7 +13,8 @@ libraryDependencies ++= {
 
   Seq(
     "org.apache.spark" %% "spark-core" % sparkV % "provided",
-    "org.apache.spark" %% "spark-sql" % sparkV % "provided"
+    "org.apache.spark" %% "spark-sql" % sparkV % "provided",
+    "mysql"             % "mysql-connector-java" % "6.0.6"
   )
 }
 
@@ -77,8 +78,8 @@ dockerfile in docker := {
     env("APP_BASE", s"$imageAppBaseDir")
     env("APP_CLASS", mainClassString)
     env("SPARK_HOME", sparkHome)
-    // add Spark JDBC dependencies
-    runRaw(s"wget -P$sparkHome/jars $mysqlJdbcJar")
+//    // add Spark JDBC dependencies
+//    runRaw(s"wget -P$sparkHome/jars $mysqlJdbcJar")
     // copy application
     copy(artifact, s"$imageAppBaseDir/${artifact.name}")
     // copy Docker stuff
