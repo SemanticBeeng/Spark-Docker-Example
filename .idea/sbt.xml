@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaSbtSettings">
+    <option name="linkedExternalProjectsSettings">
+      <SbtProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/sbt-application" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/sbt-application" />
+            <option value="$PROJECT_DIR$/sbt-application/project" />
+          </set>
+        </option>
+        <option name="sbtVersion" value="0.13.13" />
+        <option name="useAutoImport" value="true" />
+        <option name="useOurOwnAutoImport" value="true" />
+      </SbtProjectSettings>
+    </option>
+    <option name="vmParameters" value="-XX:MaxPermSize=384M -Dsbt.global.base=project/.sbtboot -Dsbt.boot.directory=project/.boot -Dsbt.ivy.home=project/.ivy" />
+  </component>
+</project>

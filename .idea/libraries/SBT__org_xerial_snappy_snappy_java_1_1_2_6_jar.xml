@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: org.xerial.snappy:snappy-java:1.1.2.6:jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.xerial.snappy/snappy-java/bundles/snappy-java-1.1.2.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.xerial.snappy/snappy-java/srcs/snappy-java-1.1.2.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

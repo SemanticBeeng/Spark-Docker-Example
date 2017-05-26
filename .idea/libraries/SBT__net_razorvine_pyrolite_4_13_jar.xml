@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: net.razorvine:pyrolite:4.13:jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/net.razorvine/pyrolite/jars/pyrolite-4.13.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/net.razorvine/pyrolite/srcs/pyrolite-4.13-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
