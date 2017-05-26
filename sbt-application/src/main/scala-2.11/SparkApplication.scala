@@ -1,6 +1,6 @@
 import java.util.Properties
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /**
   * Sample Spark application.
@@ -29,13 +29,13 @@ object SparkApplication {
     props.put("password", dbPassword)
     val predicates = new Array[String](1)
     predicates(0) = "id % 100 = 3"
-    val concepts = sparkSession.sqlContext.read.//jdbc(url, "core_db.concept", predicates, props)
-      option("format", "jdbc").
-      option("driver", driver).
-      option("url", url).
-      option("dbtable", "(select * from concept) as concept").
-      option("user", "nick").
-      option("password", "readonlySQL").load()
+    val concepts: DataFrame = sparkSession.sqlContext.read.jdbc(url, "core_db.concept", predicates, props)
+//      option("format", "jdbc").
+//      option("driver", driver).
+//      option("url", url).
+//      option("dbtable", "(select * from concept) as concept").
+//      option("user", "nick").
+//      option("password", "readonlySQL").load()
     println(s"Connected to $url")
 
 //    import sparkSession.sqlContext.implicits._
