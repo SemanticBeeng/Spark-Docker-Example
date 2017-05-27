@@ -1,7 +1,7 @@
 import java.util.Properties
 
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 
 /**
   * Sample Spark application.
@@ -14,9 +14,9 @@ object SparkApplication {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       // 4 workers
-      .set("spark.executor.instances", "1")
+      .set("spark.executor.instances", "2")
       // 5 cores on each workers
-      .set("spark.executor.cores", "5")
+      .set("spark.executor.cores", "7")
 
     val sparkSession = SparkSession
       .builder
@@ -48,26 +48,26 @@ object SparkApplication {
       option("partitionColumn", "id").
       option("lowerBound", "1").
       option("upperBound", "20046865").
-      option("numPartitions", "10").
+      option("numPartitions", "1000").
       load()
     //concepts.createGlobalTempView("concept")
     println(s"Connected to $url")
 
-//    import sparkSession.sqlContext.implicits._
-//    def inspect(r: Row): Unit = {
-//      val id = r.getInt(0)
-//      val name = r.getString(1)
-//      println(s"$id = $name")
-//      //(id, name)
-//    }
+    import sparkSession.sqlContext.implicits._
+    def inspect(r: Row): Unit = {
+      val id = r.getInt(0)
+      val name = r.getString(1)
+      println(s"$id = $name")
+      //(id, name)
+    }
 
     /**
       * https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/SQLDataSourceExample.scala#L50
       */
     //val df = concepts.sqlContext.sql("select * from concept")
     println(s"Started query at ${System.currentTimeMillis()}")
-    //concepts.foreach(inspect(_))//.write.format("parquet").save("concept.parquet")
-    concepts.write.format("parquet").save("concept.parquet")
+    concepts.foreach(inspect(_))
+    //concepts.write.format("parquet").save("concept.parquet")
     println(s"Finished query at ${System.currentTimeMillis()}")
     sparkSession.stop()
   }
