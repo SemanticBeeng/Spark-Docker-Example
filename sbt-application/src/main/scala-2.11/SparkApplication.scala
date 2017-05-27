@@ -1,7 +1,7 @@
 import java.util.Properties
 
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /**
   * Sample Spark application.
@@ -16,7 +16,7 @@ object SparkApplication {
       // 4 workers
       .set("spark.executor.instances", "3")
       // 5 cores on each workers
-      .set("spark.executor.cores", "10");
+      .set("spark.executor.cores", "10")
 
     val sparkSession = SparkSession
       .builder
