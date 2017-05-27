@@ -32,16 +32,18 @@ object SparkApplication {
     val dbUser = "readonly"
     val dbPassword = "readonlySQL"
 
+    val tableName = "concept"
+
     val props = new Properties()
     props.put("user", dbUser)
     props.put("password", dbPassword)
     //val predicates = new Array[String](1)
     //predicates(0) = "id % 100 = 3"
-    val concepts: DataFrame = //sparkSession.sqlContext.read.jdbc(url, "core_db.concept", predicates, props)
+    val table: DataFrame = //sparkSession.sqlContext.read.jdbc(url, "core_db.$tableName", predicates, props)
       sparkSession.sqlContext.read.format("jdbc").
       option("driver", driver).
       option("url", url).
-      option("dbtable", s"$dbName.concept").
+      option("dbtable", s"$dbName.$tableName").
       option("user", dbUser).
       option("password", dbPassword).
       option("fetchSize", "1000").
@@ -50,10 +52,8 @@ object SparkApplication {
       option("upperBound", "20046865").
       option("numPartitions", "1000").
       load()
-    //concepts.createGlobalTempView("concept")
+    //table.createGlobalTempView("$tableName")
     println(s"Connected to $url")
-
-    import sparkSession.sqlContext.implicits._
     def inspect(r: Row): Unit = {
       val id = r.getInt(0)
       val name = r.getString(1)
@@ -64,10 +64,10 @@ object SparkApplication {
     /**
       * https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/sql/SQLDataSourceExample.scala#L50
       */
-    //val df = concepts.sqlContext.sql("select * from concept")
+    //val df = table.sqlContext.sql("select * from $tableName")
     println(s"Started query at ${System.currentTimeMillis()}")
-    concepts.foreach(inspect(_))
-    //concepts.write.format("parquet").save("concept.parquet")
+    table.foreach(inspect(_))
+    //table.write.format("parquet").save(s"$tableName.parquet")
     println(s"Finished query at ${System.currentTimeMillis()}")
     sparkSession.stop()
   }
