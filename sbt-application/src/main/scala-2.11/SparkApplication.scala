@@ -14,9 +14,9 @@ object SparkApplication {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       // 4 workers
-      .set("spark.executor.instances", "2")
+      .set("spark.executor.instances", "1")
       // 5 cores on each workers
-      .set("spark.executor.cores", "7")
+      .set("spark.executor.cores", "4")
 
     val sparkSession = SparkSession
       .builder
