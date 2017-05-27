@@ -32,7 +32,7 @@ object SparkApplication {
     val dbUser = "readonly"
     val dbPassword = "readonlySQL"
 
-    val tableName = "concept"
+    val tableName = "citation"
 
     val props = new Properties()
     props.put("user", dbUser)
@@ -49,7 +49,7 @@ object SparkApplication {
       option("fetchSize", "1000").
       option("partitionColumn", "id").
       option("lowerBound", "1").
-      option("upperBound", "20046865").
+      option("upperBound", "502248885"). //"20046865"
       option("numPartitions", "1000").
       load()
     //table.createGlobalTempView("$tableName")
