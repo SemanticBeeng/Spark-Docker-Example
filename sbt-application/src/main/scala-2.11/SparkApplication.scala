@@ -14,7 +14,7 @@ object SparkApplication {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       // 4 workers
-      .set("spark.executor.instances", "2")
+      .set("spark.executor.instances", "1")
       // 5 cores on each workers
       .set("spark.executor.cores", "5")
 
@@ -48,7 +48,7 @@ object SparkApplication {
       option("partitionColumn", "id").
       option("lowerBound", "1").
       option("upperBound", "20046865").
-      option("numPartitions", "1000").
+      option("numPartitions", "10").
       load()
     //concepts.createGlobalTempView("concept")
     println(s"Connected to $url")
