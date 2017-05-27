@@ -42,8 +42,8 @@ object SparkApplication {
       option("driver", driver).
       option("url", url).
       option("dbtable", s"$dbName.concept").
-      option("user", "nick").
-      option("password", "readonlySQL").
+      option("user", dbUser).
+      option("password", dbPassword).
       option("fetchSize", "1000").
       option("partitionColumn", "id").
       option("lowerBound", "1").

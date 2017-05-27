@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4073e45a-a9f6-4a2e-85c8-fc9604cfb51a" name="Default" comment="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on dev3">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_avro_avro_1_7_7_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_avro_avro_1_7_7_jar.xml" />
+    <list default="true" id="4073e45a-a9f6-4a2e-85c8-fc9604cfb51a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sbt-application/.idea/modules/sbt-application.iml" afterPath="$PROJECT_DIR$/sbt-application/.idea/modules/sbt-application.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala" afterPath="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -42,8 +40,8 @@
       <file leaf-file-name="SparkApplication.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="34" column="32" lean-forward="true" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+            <state relative-caret-position="276">
+              <caret line="45" column="35" lean-forward="false" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -87,6 +85,7 @@
       <find>WHERE 1=0</find>
       <find>numPartitions</find>
       <find>core_db</find>
+      <find>nick</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -817,7 +816,7 @@
       <workItem from="1495720533354" duration="11134000" />
       <workItem from="1495741082209" duration="7585000" />
       <workItem from="1495804024490" duration="22853000" />
-      <workItem from="1495888403537" duration="744000" />
+      <workItem from="1495888403537" duration="1404000" />
     </task>
     <task id="LOCAL-00001" summary="adding mysql jar to Spark">
       <created>1495724848917</created>
@@ -973,11 +972,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495839021262</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on dev3">
+      <created>1495890141194</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1495890141194</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42316000" />
+    <option name="totallyTimeSpent" value="42976000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="185" y="19" width="1561" height="896" extended-state="0" />
@@ -1195,8 +1201,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="34" column="32" lean-forward="true" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+        <state relative-caret-position="276">
+          <caret line="45" column="35" lean-forward="false" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
           </folding>
