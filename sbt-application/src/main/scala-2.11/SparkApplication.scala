@@ -14,10 +14,10 @@ object SparkApplication {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       // number of workers
-      .set("spark.executor.instances", "2")
+      .set("spark.executor.instances", "1")
       // number of cores on each workers
-      .set("spark.executor.cores", "4")
-      //
+      .set("spark.executor.cores", "6")
+      // size of RAM per executor
       .set("spark.executor.memory", "4g")
 
     val sparkSession = SparkSession
