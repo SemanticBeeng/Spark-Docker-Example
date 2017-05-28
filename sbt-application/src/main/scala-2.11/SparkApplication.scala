@@ -16,7 +16,7 @@ object SparkApplication {
       // number of workers
       .set("spark.executor.instances", "1")
       // number of cores on each workers
-      .set("spark.executor.cores", "6")
+      .set("spark.executor.cores", "5")
       // size of RAM per executor
       .set("spark.executor.memory", "4g")
 
