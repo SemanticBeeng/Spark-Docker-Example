@@ -18,7 +18,7 @@ object SparkApplication {
       // number of cores on each workers
       .set("spark.executor.cores", "4")
       //
-      .set("spark.executor.memory", "10g")
+      .set("spark.executor.memory", "40g")
 
     val sparkSession = SparkSession
       .builder
