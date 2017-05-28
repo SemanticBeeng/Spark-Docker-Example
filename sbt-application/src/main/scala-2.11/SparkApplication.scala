@@ -50,7 +50,7 @@ object SparkApplication {
       option("partitionColumn", "id").
       option("lowerBound", "1").
       option("upperBound", "502248885"). //"20046865"
-      option("numPartitions", "100").
+      option("numPartitions", "20000").
       load()
     //table.createGlobalTempView("$tableName")
     println(s"Connected to $url")
