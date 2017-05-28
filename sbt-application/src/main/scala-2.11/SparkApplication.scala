@@ -13,10 +13,12 @@ object SparkApplication {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
-      // 4 workers
+      // number of workers
       .set("spark.executor.instances", "2")
-      // 5 cores on each workers
+      // number of cores on each workers
       .set("spark.executor.cores", "4")
+      //
+      .set("spark.executor.memory", "20g")
 
     val sparkSession = SparkSession
       .builder
@@ -50,7 +52,7 @@ object SparkApplication {
       option("partitionColumn", "id").
       option("lowerBound", "1").
       option("upperBound", "502248885"). //"20046865"
-      option("numPartitions", "20000").
+      option("numPartitions", "10000").
       load()
     //table.createGlobalTempView("$tableName")
     println(s"Connected to $url")
