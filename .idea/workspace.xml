@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4073e45a-a9f6-4a2e-85c8-fc9604cfb51a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker-compose.yml" afterPath="$PROJECT_DIR$/docker-compose.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/sbt-application/target/" />
@@ -53,7 +52,7 @@
         <entry file="file://$PROJECT_DIR$/docker-compose.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="437">
-              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -844,7 +843,7 @@
       <workItem from="1495741082209" duration="7585000" />
       <workItem from="1495804024490" duration="22853000" />
       <workItem from="1495888403537" duration="9779000" />
-      <workItem from="1495923754509" duration="2413000" />
+      <workItem from="1495923754509" duration="3696000" />
     </task>
     <task id="LOCAL-00001" summary="adding mysql jar to Spark">
       <created>1495724848917</created>
@@ -1105,11 +1104,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495929252861</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;">
+      <created>1495929297910</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1495929297910</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53764000" />
+    <option name="totallyTimeSpent" value="55047000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="185" y="19" width="1561" height="896" extended-state="0" />
@@ -1374,7 +1380,7 @@
     <entry file="file://$PROJECT_DIR$/docker-compose.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
           <folding />
         </state>
       </provider>
