@@ -18,7 +18,7 @@ object SparkApplication {
       // number of cores on each workers
       .set("spark.executor.cores", "4")
       //
-      .set("spark.executor.memory", "20g")
+      .set("spark.executor.memory", "10g")
 
     val sparkSession = SparkSession
       .builder
@@ -52,7 +52,7 @@ object SparkApplication {
       option("partitionColumn", "id").
       option("lowerBound", "1").
       option("upperBound", "502248885"). //"20046865"
-      option("numPartitions", "10000").
+      option("numPartitions", "1000").
       load()
     //table.createGlobalTempView("$tableName")
     println(s"Connected to $url")
