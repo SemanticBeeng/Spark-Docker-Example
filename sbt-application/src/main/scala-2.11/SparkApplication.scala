@@ -27,20 +27,21 @@ object SparkApplication {
     val driver = "com.mysql.cj.jdbc.Driver"
     val dbHostname = "ds-db3.scivulcan.com"
     val dbPort = "3306"
-    val dbName = "core_db"
     val url = s"jdbc:mysql://$dbHostname:$dbPort"
     val dbUser = "readonly"
     val dbPassword = "readonlySQL"
 
-    val tableName = "citation"
+    val dbName = "core_db"
+    //val tableName = "citation"
 
     //val props = new Properties()
     //props.put("user", dbUser)
     //props.put("password", dbPassword)
     //val predicates = new Array[String](1)
     //predicates(0) = "id % 100 = 3"
-    case class Partitioning(fetchSize: Int, partitionColumn: String, lowerBound: String, upperBound: String, numPartitions : Int) {
+    case class TablePartitioning(name :String, fetchSize: Int, partitionColumn: String, lowerBound: String, upperBound: String, numPartitions : Int) {
       def toOptions : Map[String, String] = Map (
+        "dbtable" → s"$dbName.$name",
         "fetchSize" → fetchSize.toString,
         "partitionColumn" → partitionColumn,
         "lowerBound" → lowerBound,
@@ -50,17 +51,17 @@ object SparkApplication {
     }
 
     object Partitioning {
-      val citiation = Partitioning(1000, "id", "1", "502248885", 1000)
+      val citation = TablePartitioning("citation", 1000, "id", "1", "502248885", 1000)
     }
 
     val table: DataFrame = //session.sqlContext.read.jdbc(url, "core_db.$tableName", predicates, props)
       session.sqlContext.read.format("jdbc").
       option("driver", driver).
       option("url", url).
-      option("dbtable", s"$dbName.$tableName").
+      //option("dbtable", s"$dbName.$tableName").
       option("user", dbUser).
       option("password", dbPassword).
-      options(Partitioning.citiation.toOptions).
+      options(Partitioning.citation.toOptions).
 //      option("fetchSize", "1000").
 //      option("partitionColumn", "id").
 //      option("lowerBound", "1").
