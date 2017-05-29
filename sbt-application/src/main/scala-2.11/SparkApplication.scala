@@ -109,7 +109,9 @@ object SparkApplication {
       */
     //val df = table.sqlContext.sql("select * from $tableName")
     println(s"Started query at ${System.currentTimeMillis()}")
-    table.foreach(inspect(_))
+    table.foreachPartition(partitionOfRecords ⇒
+      partitionOfRecords.foreach(inspect(_))
+    )
     //table.write.format("parquet").save(s"$tableName.parquet")
     println(s"Finished query at ${System.currentTimeMillis()}")
     session.stop()
