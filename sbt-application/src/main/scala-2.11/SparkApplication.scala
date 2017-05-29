@@ -47,9 +47,37 @@ object SparkApplication {
     }
 
     object Partitioning {
-      val paper     = TablePartitioning("paper",    1000, "id", "1",  "27169771", 1000)
-      val author    = TablePartitioning("author_v2",1000, "id", "1",  "17167613", 1000)
-      val citation  = TablePartitioning("citation", 1000, "id", "1", "502248885", 1000)
+      val paper
+        = TablePartitioning("paper",                1000, "id", "1",   "27169771", 1000)
+      val paper_to_author_v2
+      = TablePartitioning("paper_to_author_v2",     1000, "id", "1",  "103374152", 1000)
+      val paper_to_concept
+      = TablePartitioning("paper_to_concept",       1000, "id", "1",  "171984568", 1000)
+      val paper_to_venue
+      = TablePartitioning("paper_to_venue",         1000, "id", "1",   "27163980", 1000)
+      val paper_to_institution
+      = TablePartitioning("paper_to_institution",   1000, "id", "1",   "51336994", 1000)
+
+      val author
+        = TablePartitioning("author_v2",1000, "id", "1",  "17167613", 1000)
+
+      val concept
+        = TablePartitioning("concept",  1000, "id", "1",  "19929833", 1000)
+      val concept_to_semantic_type
+        = TablePartitioning("concept_to_semantic_type",   1000, "id", "1",   "3227757", 1000)
+      val concept_to_org_ref
+      = TablePartitioning("concept_to_org_ref",           1000, "id", "1",   "8906151", 1000)
+      val concept_to_atom
+      = TablePartitioning("concept_to_atom",              1000, "id", "1",  "29458364", 1000)
+
+      val citation
+      = TablePartitioning("citation",     1000, "id", "1", "502248885", 1000)
+      val institution
+      = TablePartitioning("institution",  1000, "id", "1",    "427686", 1000)
+      val semantic_type
+      = TablePartitioning("semantic_type",1000, "id", "1",       "133", 1000)
+      val venue
+      = TablePartitioning("venue",        1000, "id", "1",     "36860", 1000)
     }
 
     val table: DataFrame = //session.sqlContext.read.jdbc(url, "core_db.$tableName", predicates, props)
