@@ -64,7 +64,7 @@ object SparkApplication {
     //table.createGlobalTempView("$tableName")
     println(s"Connected to $url")
     def inspect(r: Row): Unit = {
-      val id = r.getInt(0)
+      val id = r.getString(0)
       val name = r.getString(1)
       println(s"$id = $name")
       //(id, name)
