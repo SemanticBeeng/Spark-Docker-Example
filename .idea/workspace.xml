@@ -41,10 +41,20 @@
         <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="399">
-              <caret line="21" column="56" lean-forward="false" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
+              <caret line="21" column="37" lean-forward="false" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="docker-compose.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" column="16" lean-forward="false" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -82,6 +92,7 @@
       <find>paper_to</find>
       <find>cita</find>
       <find>19929833</find>
+      <find>driver</find>
     </findStrings>
     <replaceStrings>
       <replace>$tableName</replace>
@@ -150,6 +161,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala-2.11" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -821,14 +872,7 @@
       <workItem from="1495888403537" duration="9779000" />
       <workItem from="1495923754509" duration="5943000" />
       <workItem from="1495975280151" duration="3969000" />
-      <workItem from="1496062930039" duration="10393000" />
-    </task>
-    <task id="LOCAL-00009" summary="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&#10;AnalysisException: Unable to infer schema for Parquet&#10;">
-      <created>1495806858871</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1495806858871</updated>
+      <workItem from="1496062930039" duration="11384000" />
     </task>
     <task id="LOCAL-00010" summary="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&#10;">
       <created>1495807101248</created>
@@ -1166,11 +1210,18 @@
       <option name="project" value="LOCAL" />
       <updated>1496078246744</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;">
+      <created>1496082043340</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1496082043340</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71656000" />
+    <option name="totallyTimeSpent" value="72647000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="192" y="36" width="1547" height="868" extended-state="0" />
@@ -1258,6 +1309,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
           <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1289,6 +1341,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1459,15 +1512,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/docker-compose.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="74" lean-forward="true" selection-start-line="2" selection-start-column="74" selection-end-line="2" selection-end-column="74" />
+        <state relative-caret-position="114">
+          <caret line="6" column="16" lean-forward="false" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
-          <caret line="21" column="56" lean-forward="false" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
+          <caret line="21" column="37" lean-forward="false" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>

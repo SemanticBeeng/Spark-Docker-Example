@@ -18,7 +18,9 @@ object SparkApplication {
       // number of cores on each workers
       .set("spark.executor.cores", "4")
       // size of RAM per executor
-      .set("spark.executor.memory", "4g")
+      .set("spark.executor.memory", "10g")
+      .set("spark.driver.memory", "10g")
+      // https://stackoverflow.com/questions/37260230/spark-cluster-full-of-heartbeat-timeouts-executors-exiting-on-their-own
       .set("spark.network.timeout", 300.seconds.toMillis.toString)
 
     val session = SparkSession
