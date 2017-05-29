@@ -22,6 +22,7 @@ object SparkApplication {
       .set("spark.driver.memory", "3g")
       // https://stackoverflow.com/questions/37260230/spark-cluster-full-of-heartbeat-timeouts-executors-exiting-on-their-own
       .set("spark.network.timeout", 300.seconds.toMillis.toString)
+      .set("spark.executor.extraJavaOptions", "-verbose:gc -XX:-PrintGCDetails -XX:+PrintGCTimeStamps")
 
     val session = SparkSession
       .builder
@@ -91,7 +92,7 @@ object SparkApplication {
       option("url", url).
       option("user", dbUser).
       option("password", dbPassword).
-      options(Partitioning.paper_to_concept.toOptions).
+      options(Partitioning.concept_to_semantic_type.toOptions).
       load()
 
     //table.createGlobalTempView("$tableName")
