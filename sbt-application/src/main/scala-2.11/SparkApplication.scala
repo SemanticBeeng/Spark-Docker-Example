@@ -22,7 +22,10 @@ object SparkApplication {
       .set("spark.driver.memory", "3g")
       // https://stackoverflow.com/questions/37260230/spark-cluster-full-of-heartbeat-timeouts-executors-exiting-on-their-own
       .set("spark.network.timeout", 300.seconds.toMillis.toString)
-      .set("spark.executor.extraJavaOptions", "-verbose:gc -XX:-PrintGCDetails -XX:+PrintGCTimeStamps")
+      .set("spark.executor.extraJavaOptions", "-XX:+UseG1GC -XX:+PrintFlagsFinal -XX:+PrintReferenceGC -verbose:gc " +
+                                              "-XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintAdaptiveSizePolicy " +
+                                              "-XX:+UnlockDiagnosticVMOptions -XX:+G1SummarizeConcMark " +
+                                              "XX:InitiatingHeapOccupancyPercent=35 -XX:ConcGCThread=20")
 
     val session = SparkSession
       .builder
