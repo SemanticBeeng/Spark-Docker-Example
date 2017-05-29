@@ -10,6 +10,8 @@ object SparkApplication {
   case class Point(x: Double, y: Double, z: Double)
 
   def main(args: Array[String]): Unit = {
+
+    import scala.concurrent.duration._
     val conf = new SparkConf()
       // number of workers
       .set("spark.executor.instances", "1")
@@ -17,6 +19,7 @@ object SparkApplication {
       .set("spark.executor.cores", "4")
       // size of RAM per executor
       .set("spark.executor.memory", "4g")
+      .set("spark.network.timeout", 300.seconds.toMillis.toString)
 
     val session = SparkSession
       .builder
@@ -62,16 +65,16 @@ object SparkApplication {
         = TablePartitioning("author_v2",1000, "id", "1",  "17167613", 1000)
 
       val concept
-        = TablePartitioning("concept",  1000, "id", "1",  "19929833", 1000)
+        = TablePartitioning("concept",                    1000, "id",         "1",  "19929833", 1000)
       val concept_to_semantic_type
-        = TablePartitioning("concept_to_semantic_type",   1000, "id_inc", "1",     "3227757", 1000)
+        = TablePartitioning("concept_to_semantic_type",   1000, "id_inc",     "1",   "3227757", 1000)
       val concept_to_org_ref
-      = TablePartitioning("concept_to_org_ref",           1000, "id_concept", "1", "8906151", 1000)
+      = TablePartitioning("concept_to_org_ref",           1000, "id_concept", "1",   "8906151", 1000)
       val concept_to_atom
-      = TablePartitioning("concept_to_atom",              1000, "id_inc", "1",    "29458364", 1000)
+      = TablePartitioning("concept_to_atom",              1000, "id_inc",      "1", "29458364", 1000)
 
       val citation
-      = TablePartitioning("citation",     1000, "id", "1", "502248885", 1000)
+      = TablePartitioning("citation",     1000, "id", "1", "514293296", 1000)
       val institution
       = TablePartitioning("institution",  1000, "id", "1",    "427686", 1000)
       val semantic_type
