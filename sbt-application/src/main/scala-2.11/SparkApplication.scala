@@ -31,15 +31,11 @@ object SparkApplication {
     val dbUser = "readonly"
     val dbPassword = "readonlySQL"
 
-    val dbName = "core_db"
-    //val tableName = "citation"
-
-    //val props = new Properties()
-    //props.put("user", dbUser)
-    //props.put("password", dbPassword)
     //val predicates = new Array[String](1)
     //predicates(0) = "id % 100 = 3"
     case class TablePartitioning(name :String, fetchSize: Int, partitionColumn: String, lowerBound: String, upperBound: String, numPartitions : Int) {
+      val dbName = "core_db"
+
       def toOptions : Map[String, String] = Map (
         "dbtable" → s"$dbName.$name",
         "fetchSize" → fetchSize.toString,
@@ -51,22 +47,18 @@ object SparkApplication {
     }
 
     object Partitioning {
-      val citation = TablePartitioning("citation", 1000, "id", "1", "502248885", 1000)
+      val paper     = TablePartitioning("paper",    1000, "id", "1",  "27169771", 1000)
+      val author    = TablePartitioning("author_v2",1000, "id", "1",  "17167613", 1000)
+      val citation  = TablePartitioning("citation", 1000, "id", "1", "502248885", 1000)
     }
 
     val table: DataFrame = //session.sqlContext.read.jdbc(url, "core_db.$tableName", predicates, props)
       session.sqlContext.read.format("jdbc").
       option("driver", driver).
       option("url", url).
-      //option("dbtable", s"$dbName.$tableName").
       option("user", dbUser).
       option("password", dbPassword).
-      options(Partitioning.citation.toOptions).
-//      option("fetchSize", "1000").
-//      option("partitionColumn", "id").
-//      option("lowerBound", "1").
-//      option("upperBound", "502248885"). //"20046865"
-//      option("numPartitions", "1000").
+      options(Partitioning.paper.toOptions).
       load()
 
     //table.createGlobalTempView("$tableName")
