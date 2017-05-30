@@ -57,37 +57,38 @@ object SparkApplication {
     }
 
     object Partitioning {
+      private val numPartitions = 200
       val paper
-        = TablePartitioning("paper",                1000, "id",     "1",   "27169771", 1000)
+        = TablePartitioning("paper",                numPartitions, "id",     "1",   "27169771", numPartitions)
       val paper_to_author_v2
-      = TablePartitioning("paper_to_author_v2",     1000, "id",     "1",  "103374152", 1000)
+      = TablePartitioning("paper_to_author_v2",     numPartitions, "id",     "1",  "103374152", numPartitions)
       val paper_to_concept
-      = TablePartitioning("paper_to_concept",       1000, "id_inc", "1",  "171984568", 1000)
+      = TablePartitioning("paper_to_concept",       numPartitions, "id_inc", "1",  "171984568", numPartitions)
       val paper_to_venue
-      = TablePartitioning("paper_to_venue",         1000, "id_inc", "1",   "27163980", 1000)
+      = TablePartitioning("paper_to_venue",         numPartitions, "id_inc", "1",   "27163980", numPartitions)
       val paper_to_institution
-      = TablePartitioning("paper_to_institution",   1000, "id_inc", "1",   "51336994", 1000)
+      = TablePartitioning("paper_to_institution",   numPartitions, "id_inc", "1",   "51336994", numPartitions)
 
       val author
-        = TablePartitioning("author_v2",1000, "id", "1",  "17167613", 1000)
+        = TablePartitioning("author_v2",numPartitions, "id", "1",  "17167613", numPartitions)
 
       val concept
-        = TablePartitioning("concept",                    1000, "id",         "1",  "19929833", 1000)
+        = TablePartitioning("concept",                    numPartitions, "id",         "1",  "19929833", numPartitions)
       val concept_to_semantic_type
-        = TablePartitioning("concept_to_semantic_type",   1000, "id_inc",     "1",   "3227757", 1000)
+        = TablePartitioning("concept_to_semantic_type",   numPartitions, "id_inc",     "1",   "3227757", numPartitions)
       val concept_to_org_ref
-      = TablePartitioning("concept_to_org_ref",           1000, "id_concept", "1",   "8906151", 1000)
+      = TablePartitioning("concept_to_org_ref",           numPartitions, "id_concept", "1",   "8906151", numPartitions)
       val concept_to_atom
-      = TablePartitioning("concept_to_atom",              1000, "id_inc",      "1", "29458364", 1000)
+      = TablePartitioning("concept_to_atom",              numPartitions, "id_inc",      "1", "29458364", numPartitions)
 
       val citation
-      = TablePartitioning("citation",     1000, "id", "1", "514293296", 1000)
+      = TablePartitioning("citation",     numPartitions, "id", "1", "514293296", numPartitions)
       val institution
-      = TablePartitioning("institution",  1000, "id", "1",    "427686", 1000)
+      = TablePartitioning("institution",  numPartitions, "id", "1",    "427686", numPartitions)
       val semantic_type
-      = TablePartitioning("semantic_type",1000, "id", "1",       "133", 1000)
+      = TablePartitioning("semantic_type",numPartitions, "id", "1",       "133", numPartitions)
       val venue
-      = TablePartitioning("venue",        1000, "id", "1",     "36860", 1000)
+      = TablePartitioning("venue",        numPartitions, "id", "1",     "36860", numPartitions)
     }
 
     val table: DataFrame = //session.sqlContext.read.jdbc(url, "core_db.$tableName", predicates, props)
@@ -114,7 +115,7 @@ object SparkApplication {
     //val df = table.sqlContext.sql("select * from $tableName")
     println(s"Started query at ${System.currentTimeMillis()}")
     table.foreachPartition(partitionOfRecords ⇒
-      partitionOfRecords.foreach(inspect(_))
+      partitionOfRecords.foreach(inspect)
     )
     //table.write.format("parquet").save(s"$tableName.parquet")
     println(s"Finished query at ${System.currentTimeMillis()}")
