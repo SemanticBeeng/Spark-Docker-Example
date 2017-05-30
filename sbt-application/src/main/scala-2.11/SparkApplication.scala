@@ -93,7 +93,7 @@ object SparkApplication {
       option("url", url).
       option("user", dbUser).
       option("password", dbPassword).
-      options(Partitioning.institution.toOptions).
+      options(Partitioning.concept.toOptions).
       load()
 
     //table.createGlobalTempView("$tableName")
