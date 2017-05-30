@@ -7,7 +7,53 @@ import org.apache.spark.sql.{DataFrame, Row, SparkSession}
   */
 object SparkApplication {
 
-  case class Point(x: Double, y: Double, z: Double)
+  case class TablePartitioning(name :String, fetchSize: Int, partitionColumn: String, lowerBound: String, upperBound: String, numPartitions : Int) {
+    val dbName = "core_db"
+
+    def toOptions : Map[String, String] = Map (
+      "dbtable" → s"$dbName.$name",
+      "fetchSize" → fetchSize.toString,
+      "partitionColumn" → partitionColumn,
+      "lowerBound" → lowerBound,
+      "upperBound" → upperBound,
+      "numPartitions" → numPartitions.toString
+    )
+  }
+
+  object Partitioning {
+    private val numPartitions = 1000
+    val paper
+    = TablePartitioning("paper",                numPartitions, "id",     "1",   "27169771", numPartitions)
+    val paper_to_author_v2
+    = TablePartitioning("paper_to_author_v2",     numPartitions, "id",     "1",  "103374152", numPartitions)
+    val paper_to_concept
+    = TablePartitioning("paper_to_concept",       numPartitions, "id_inc", "1",  "171984568", numPartitions)
+    val paper_to_venue
+    = TablePartitioning("paper_to_venue",         numPartitions, "id_inc", "1",   "27163980", numPartitions)
+    val paper_to_institution
+    = TablePartitioning("paper_to_institution",   numPartitions, "id_inc", "1",   "51336994", numPartitions)
+
+    val author
+    = TablePartitioning("author_v2",numPartitions, "id", "1",  "17167613", numPartitions)
+
+    val concept
+    = TablePartitioning("concept",                    numPartitions, "id",         "1",  "19929833", numPartitions)
+    val concept_to_semantic_type
+    = TablePartitioning("concept_to_semantic_type",   numPartitions, "id_inc",     "1",   "3227757", numPartitions)
+    val concept_to_org_ref
+    = TablePartitioning("concept_to_org_ref",           numPartitions, "id_concept", "1",   "8906151", numPartitions)
+    val concept_to_atom
+    = TablePartitioning("concept_to_atom",              numPartitions, "id_inc",      "1", "29458364", numPartitions)
+
+    val citation
+    = TablePartitioning("citation",     numPartitions, "id", "1", "514293296", numPartitions)
+    val institution
+    = TablePartitioning("institution",  numPartitions, "id", "1",    "427686", numPartitions)
+    val semantic_type
+    = TablePartitioning("semantic_type",numPartitions, "id", "1",       "133", numPartitions)
+    val venue
+    = TablePartitioning("venue",        numPartitions, "id", "1",     "36860", numPartitions)
+  }
 
   def main(args: Array[String]): Unit = {
 
@@ -41,63 +87,13 @@ object SparkApplication {
     val dbUser = "readonly"
     val dbPassword = "readonlySQL"
 
-    //val predicates = new Array[String](1)
-    //predicates(0) = "id % 100 = 3"
-    case class TablePartitioning(name :String, fetchSize: Int, partitionColumn: String, lowerBound: String, upperBound: String, numPartitions : Int) {
-      val dbName = "core_db"
-
-      def toOptions : Map[String, String] = Map (
-        "dbtable" → s"$dbName.$name",
-        "fetchSize" → fetchSize.toString,
-        "partitionColumn" → partitionColumn,
-        "lowerBound" → lowerBound,
-        "upperBound" → upperBound,
-        "numPartitions" → numPartitions.toString
-      )
-    }
-
-    object Partitioning {
-      private val numPartitions = 1000
-      val paper
-        = TablePartitioning("paper",                numPartitions, "id",     "1",   "27169771", numPartitions)
-      val paper_to_author_v2
-      = TablePartitioning("paper_to_author_v2",     numPartitions, "id",     "1",  "103374152", numPartitions)
-      val paper_to_concept
-      = TablePartitioning("paper_to_concept",       numPartitions, "id_inc", "1",  "171984568", numPartitions)
-      val paper_to_venue
-      = TablePartitioning("paper_to_venue",         numPartitions, "id_inc", "1",   "27163980", numPartitions)
-      val paper_to_institution
-      = TablePartitioning("paper_to_institution",   numPartitions, "id_inc", "1",   "51336994", numPartitions)
-
-      val author
-        = TablePartitioning("author_v2",numPartitions, "id", "1",  "17167613", numPartitions)
-
-      val concept
-        = TablePartitioning("concept",                    numPartitions, "id",         "1",  "19929833", numPartitions)
-      val concept_to_semantic_type
-        = TablePartitioning("concept_to_semantic_type",   numPartitions, "id_inc",     "1",   "3227757", numPartitions)
-      val concept_to_org_ref
-      = TablePartitioning("concept_to_org_ref",           numPartitions, "id_concept", "1",   "8906151", numPartitions)
-      val concept_to_atom
-      = TablePartitioning("concept_to_atom",              numPartitions, "id_inc",      "1", "29458364", numPartitions)
-
-      val citation
-      = TablePartitioning("citation",     numPartitions, "id", "1", "514293296", numPartitions)
-      val institution
-      = TablePartitioning("institution",  numPartitions, "id", "1",    "427686", numPartitions)
-      val semantic_type
-      = TablePartitioning("semantic_type",numPartitions, "id", "1",       "133", numPartitions)
-      val venue
-      = TablePartitioning("venue",        numPartitions, "id", "1",     "36860", numPartitions)
-    }
-
     val table: DataFrame = //session.sqlContext.read.jdbc(url, "core_db.$tableName", predicates, props)
       session.sqlContext.read.format("jdbc").
       option("driver", driver).
       option("url", url).
       option("user", dbUser).
       option("password", dbPassword).
-      options(Partitioning.citation.toOptions).
+      options(Partitioning.institution.toOptions).
       load()
 
     //table.createGlobalTempView("$tableName")
@@ -114,11 +110,15 @@ object SparkApplication {
       */
     //val df = table.sqlContext.sql("select * from $tableName")
     println(s"Started query at ${System.currentTimeMillis()}")
-    table.foreachPartition(partitionOfRecords ⇒
-      partitionOfRecords.foreach(inspect)
+    val count = session.sparkContext.longAccumulator
+
+    table.foreachPartition((partitionRows: Iterator[Row]) ⇒ {
+        partitionRows.foreach {r ⇒ inspect(r); count.add(1)}
+        //session.sparkContext.broadcast(count)
+      }
     )
     //table.write.format("parquet").save(s"$tableName.parquet")
-    println(s"Finished query at ${System.currentTimeMillis()}")
+    println(s"Finished query at ${System.currentTimeMillis()}; found ${count.value} records")
     session.stop()
   }
 }
