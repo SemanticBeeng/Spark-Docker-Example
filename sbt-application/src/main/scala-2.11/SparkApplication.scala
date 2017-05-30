@@ -57,7 +57,7 @@ object SparkApplication {
     }
 
     object Partitioning {
-      private val numPartitions = 200
+      private val numPartitions = 1000
       val paper
         = TablePartitioning("paper",                numPartitions, "id",     "1",   "27169771", numPartitions)
       val paper_to_author_v2
