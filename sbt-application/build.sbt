@@ -14,9 +14,10 @@ libraryDependencies ++= {
   Seq(
     "org.apache.spark" %% "spark-core"              % sparkV % "provided",
     "org.apache.spark" %% "spark-sql"               % sparkV % "provided",
-    "org.apache.spark" %% "spark-streaming"         % sparkV % "provided",
-    "org.apache.spark" %% "spark-streaming-kafka"   % "1.6.3" % "provided",
-    "mysql"             % "mysql-connector-java" % "6.0.6"
+//    "org.apache.spark" %% "spark-streaming"         % sparkV % "provided",
+//    "org.apache.spark" %% "spark-streaming-kafka"   % "1.6.3" % "provided",
+    "com.typesafe.akka" %% "akka-stream-kafka"      % "0.16",
+    "mysql"             % "mysql-connector-java"    % "6.0.6"
   )
 }
 
