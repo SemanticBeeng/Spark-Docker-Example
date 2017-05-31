@@ -41,6 +41,8 @@ object SparkApplication {
 
     val table = Partitioning.citation
 
+    import session.implicits._
+
     val rdd: DataFrame = //session.sqlContext.read.jdbc(url, "core_db.$tableName", predicates, props)
       session.sqlContext.read.format("jdbc").
       option("driver", driver).
@@ -60,8 +62,12 @@ object SparkApplication {
     val count = session.sparkContext.longAccumulator
 
     rdd.foreachPartition((partitionRows: Iterator[Row]) ⇒ {
-        partitionRows.foreach {r ⇒ Partitioning.inspect(r); count.add(1)}
-        //session.sparkContext.broadcast(count)
+        val producer = Partitioning.makeProducer
+        partitionRows.foreach {r ⇒
+            Partitioning.process(producer, r)
+            count.add(1)
+          }
+        producer.close()
       }
     )
     //rdd.write.format("parquet").save(s"$tableName.parquet")

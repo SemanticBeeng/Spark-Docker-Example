@@ -12,8 +12,10 @@ libraryDependencies ++= {
   val sparkV = "2.1.0"
 
   Seq(
-    "org.apache.spark" %% "spark-core" % sparkV % "provided",
-    "org.apache.spark" %% "spark-sql" % sparkV % "provided",
+    "org.apache.spark" %% "spark-core"              % sparkV % "provided",
+    "org.apache.spark" %% "spark-sql"               % sparkV % "provided",
+    "org.apache.spark" %% "spark-streaming"         % sparkV % "provided",
+    "org.apache.spark" %% "spark-streaming-kafka"   % "1.6.3" % "provided",
     "mysql"             % "mysql-connector-java" % "6.0.6"
   )
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4073e45a-a9f6-4a2e-85c8-fc9604cfb51a" name="Default" comment="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;attempts to fix the memory related errors at the end&#10;https://www.slideshare.net/jcmia1/a-beginners-guide-on-troubleshooting-spark-applications&#10;&#10;trying GC1&#10;&#10;&quot;Exception in thread &quot;dispatcher-event-loop-14&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;`#table_concept_to_atom` scan finishes in 6.8 min with prev version&#10;no GC errors at the end&#10;&#10;(checkpoint) `#table_citation` scan finishes in 7.1 mins with this version&#10;no GC errors&#10;&#10;&quot;17/05/30 13:27:13 INFO scheduler.DAGScheduler: Job 0 finished: foreachPartition at SparkApplication.scala:116, took 418.038651 s&quot;&#10;&#10;got this in one of the tasks&#10; this run took longer than with 1000 partitions (31 mins) and cores are more busy&#10;&#10;```&#10;application_1  | 17/05/30 20:41:00 INFO scheduler.TaskSetManager: Finished task 161.0 in stage 0.0 (TID 161) in 70495 ms on 172.17.0.4 (executor 0) (163/200)&#10;master_1       | 17/05/30 20:41:31 ERROR server.TransportRequestHandler: Error while invoking RpcHandler#receive() on RPC id 8026212994298965842&#10;master_1       | java.io.StreamCorruptedException: invalid type code: 31&#10;```&#10;&#10;Got these errors but no GC or r other kind of errors &#10;&#10;```&#10;application_1  | 17/05/30 20:50:20 INFO scheduler.TaskSetManager: Finished task 193.0 in stage 0.0 (TID 193) in 88089 ms on 172.17.0.4 (executor 0) (195/200)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Starting task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0, partition 199, PROCESS_LOCAL, 5890 bytes)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Finished task 195.0 in stage 0.0 (TID 195) in 67193 ms on 172.17.0.4 (executor 0) (196/200)&#10;application_1  | 17/05/30 20:58:11 ERROR scheduler.TaskSchedulerImpl: Lost executor 0 on 172.17.0.4: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 196.0 in stage 0.0 (TID 196, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 198.0 in stage 0.0 (TID 198, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 197.0 in stage 0.0 (TID 197, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 INFO scheduler.DAGScheduler: Executor lost: 0 (epoch 0)&#10;```&#10;eventually got ths &#10; 17/05/30 21:03:53 WARN scheduler.TaskSetManager: Lost task 199.1 in stage 0.0 (TID 202, 172.17.0.4, executor 1): java.lang.OutOfMemoryError: GC overhead limit exceeded&#10;&#10;&#10;slight refactoring&#10;introduce accumulators to count&#10;&#10;this correctly counts 427686 records&#10;&#10;this correctly counts 19929833 records&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/Partitioning.scala" />
+    <list default="true" id="4073e45a-a9f6-4a2e-85c8-fc9604cfb51a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sbt-application/.idea/modules/sbt-application.iml" afterPath="$PROJECT_DIR$/sbt-application/.idea/modules/sbt-application.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sbt-application/build.sbt" afterPath="$PROJECT_DIR$/sbt-application/build.sbt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/Partitioning.scala" afterPath="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/Partitioning.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala" afterPath="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -38,11 +40,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SparkApplication.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SparkApplication.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="63" column="10" lean-forward="false" selection-start-line="63" selection-start-column="10" selection-end-line="63" selection-end-column="10" />
+            <state relative-caret-position="344">
+              <caret line="63" column="0" lean-forward="false" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -50,11 +52,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Partitioning.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Partitioning.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/Partitioning.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+            <state relative-caret-position="228">
+              <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
+              <folding>
+                <element signature="e#1#89#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KafkaProducer.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.kafka/kafka-clients/srcs/kafka-clients-0.8.2.1-sources.jar!/org/apache/kafka/clients/producer/KafkaProducer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="379">
+              <caret line="91" column="43" lean-forward="false" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KafkaInputDStream.scala" pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-streaming-kafka_2.11/srcs/spark-streaming-kafka_2.11-1.6.3-sources.jar!/org/apache/spark/streaming/kafka/KafkaInputDStream.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="235">
+              <caret line="67" column="19" lean-forward="false" selection-start-line="67" selection-start-column="6" selection-end-line="67" selection-end-column="19" />
+              <folding>
+                <element signature="n#!!doc" expanded="false" />
+                <element signature="e#844#871#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.sbt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sbt-application/build.sbt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="17" column="48" lean-forward="false" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -63,9 +100,12 @@
       <file leaf-file-name="Dataset.scala" pinned="false" current-in-tab="false">
         <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.1.0-sources.jar!/org/apache/spark/sql/Dataset.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
+            <state relative-caret-position="43035">
               <caret line="2314" column="22" lean-forward="false" selection-start-line="2314" selection-start-column="6" selection-end-line="2314" selection-end-column="22" />
-              <folding />
+              <folding>
+                <element signature="n#!!doc" expanded="false" />
+                <element signature="e#832#862#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -73,7 +113,7 @@
       <file leaf-file-name="DataFrameReader.scala" pinned="false" current-in-tab="false">
         <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.1.0-sources.jar!/org/apache/spark/sql/DataFrameReader.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
+            <state relative-caret-position="1387">
               <caret line="102" column="13" lean-forward="false" selection-start-line="102" selection-start-column="2" selection-end-line="102" selection-end-column="13" />
               <folding>
                 <element signature="n#!!doc" expanded="false" />
@@ -97,11 +137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>implic</find>
-      <find>semantiv</find>
-      <find>sparkHome</find>
-      <find>WHERE 1=0</find>
-      <find>numPartitions</find>
       <find>core_db</find>
       <find>nick</find>
       <find>exec</find>
@@ -122,11 +157,16 @@
       <find>19929833</find>
       <find>driver</find>
       <find>toOptions</find>
-      <find>toOptions</find>
       <find>def option</find>
       <find>def options</find>
       <find>foreachPartition</find>
       <find>427686</find>
+      <find>implicit</find>
+      <find>ins</find>
+      <find>outpu</find>
+      <find>DStream</find>
+      <find>outputstream</find>
+      <find>zoo</find>
     </findStrings>
     <replaceStrings>
       <replace>$tableName</replace>
@@ -154,8 +194,8 @@
         <option value="$PROJECT_DIR$/docker-compose.yml" />
         <option value="$PROJECT_DIR$/semantive/Dockerfile" />
         <option value="$PROJECT_DIR$/sbt-application/build.sbt" />
-        <option value="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/Partitioning.scala" />
         <option value="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala" />
+        <option value="$PROJECT_DIR$/sbt-application/src/main/scala-2.11/Partitioning.scala" />
       </list>
     </option>
   </component>
@@ -187,6 +227,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -270,10 +312,642 @@
               <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11-1.6.3.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11-1.6.3.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="streaming" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11-1.6.3.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="streaming" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="KafkaUtilsPythonHelper.class" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spark-streaming-kafka_2.11-1.6.3.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients-0.8.2.1.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients-0.8.2.1.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients-0.8.2.1.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clients" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spark-Docker-Example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sbt-application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jars" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka-clients-0.8.2.1.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apache" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kafka" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clients" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="producer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -860,7 +1534,7 @@
     </configuration>
   </component>
   <component name="SbtLocalSettings">
-    <option name="lastUpdateTimestamp" value="1496062963086" />
+    <option name="lastUpdateTimestamp" value="1496244282206" />
     <option name="availableProjects">
       <map>
         <entry>
@@ -910,7 +1584,7 @@
         <entry key="$PROJECT_DIR$/../../../../04_clients/czi/shai" value="1488304294435" />
         <entry key="$PROJECT_DIR$/../../../../04_clients/czi/thoth" value="1488319830371" />
         <entry key="$PROJECT_DIR$/../../../../04_clients/fastfish/cp-catalog" value="1487947337788" />
-        <entry key="$PROJECT_DIR$/sbt-application" value="1495983907880" />
+        <entry key="$PROJECT_DIR$/sbt-application" value="1496244250600" />
         <entry key="$PROJECT_DIR$/../../../../10_misc/Ammonite" value="2926000955000" />
       </map>
     </option>
@@ -938,14 +1612,8 @@
       <workItem from="1495923754509" duration="5943000" />
       <workItem from="1495975280151" duration="3969000" />
       <workItem from="1496062930039" duration="19517000" />
-      <workItem from="1496147158506" duration="13078000" />
-    </task>
-    <task id="LOCAL-00039" summary="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;">
-      <created>1495933196587</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1495933196587</updated>
+      <workItem from="1496147158506" duration="13761000" />
+      <workItem from="1496235152511" duration="9031000" />
     </task>
     <task id="LOCAL-00040" summary="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;">
       <created>1495933424261</created>
@@ -1283,11 +1951,18 @@
       <option name="project" value="LOCAL" />
       <updated>1496183373406</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;attempts to fix the memory related errors at the end&#10;https://www.slideshare.net/jcmia1/a-beginners-guide-on-troubleshooting-spark-applications&#10;&#10;trying GC1&#10;&#10;&quot;Exception in thread &quot;dispatcher-event-loop-14&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;`#table_concept_to_atom` scan finishes in 6.8 min with prev version&#10;no GC errors at the end&#10;&#10;(checkpoint) `#table_citation` scan finishes in 7.1 mins with this version&#10;no GC errors&#10;&#10;&quot;17/05/30 13:27:13 INFO scheduler.DAGScheduler: Job 0 finished: foreachPartition at SparkApplication.scala:116, took 418.038651 s&quot;&#10;&#10;got this in one of the tasks&#10; this run took longer than with 1000 partitions (31 mins) and cores are more busy&#10;&#10;```&#10;application_1  | 17/05/30 20:41:00 INFO scheduler.TaskSetManager: Finished task 161.0 in stage 0.0 (TID 161) in 70495 ms on 172.17.0.4 (executor 0) (163/200)&#10;master_1       | 17/05/30 20:41:31 ERROR server.TransportRequestHandler: Error while invoking RpcHandler#receive() on RPC id 8026212994298965842&#10;master_1       | java.io.StreamCorruptedException: invalid type code: 31&#10;```&#10;&#10;Got these errors but no GC or r other kind of errors &#10;&#10;```&#10;application_1  | 17/05/30 20:50:20 INFO scheduler.TaskSetManager: Finished task 193.0 in stage 0.0 (TID 193) in 88089 ms on 172.17.0.4 (executor 0) (195/200)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Starting task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0, partition 199, PROCESS_LOCAL, 5890 bytes)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Finished task 195.0 in stage 0.0 (TID 195) in 67193 ms on 172.17.0.4 (executor 0) (196/200)&#10;application_1  | 17/05/30 20:58:11 ERROR scheduler.TaskSchedulerImpl: Lost executor 0 on 172.17.0.4: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 196.0 in stage 0.0 (TID 196, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 198.0 in stage 0.0 (TID 198, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 197.0 in stage 0.0 (TID 197, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 INFO scheduler.DAGScheduler: Executor lost: 0 (epoch 0)&#10;```&#10;eventually got ths &#10; 17/05/30 21:03:53 WARN scheduler.TaskSetManager: Lost task 199.1 in stage 0.0 (TID 202, 172.17.0.4, executor 1): java.lang.OutOfMemoryError: GC overhead limit exceeded&#10;&#10;&#10;slight refactoring&#10;introduce accumulators to count&#10;&#10;this correctly counts 427686 records&#10;&#10;this correctly counts 19929833 records&#10;&#10;refactoring&#10;">
+      <created>1496185849250</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1496185849250</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93858000" />
+    <option name="totallyTimeSpent" value="103572000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="288" y="39" width="1547" height="868" extended-state="0" />
@@ -1295,6 +1970,7 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971507" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1304,10 +1980,9 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27751833" sideWeight="0.49542484" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28152102" sideWeight="0.49542484" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Execute" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24983476" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1319,6 +1994,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1331,7 +2007,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="false" />
-    <MESSAGE value="adding mysql jar to Spark&#10;query core-db" />
     <MESSAGE value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;" />
     <MESSAGE value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&#10;AnalysisException: Unable to infer schema for Parquet&#10;" />
     <MESSAGE value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&#10;" />
@@ -1356,7 +2031,8 @@
     <MESSAGE value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;attempts to fix the memory related errors at the end&#10;https://www.slideshare.net/jcmia1/a-beginners-guide-on-troubleshooting-spark-applications&#10;&#10;trying GC1&#10;&#10;&quot;Exception in thread &quot;dispatcher-event-loop-14&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;`#table_concept_to_atom` scan finishes in 6.8 min with prev version&#10;no GC errors at the end&#10;&#10;(checkpoint) `#table_citation` scan finishes in 7.1 mins with this version&#10;no GC errors&#10;&#10;&quot;17/05/30 13:27:13 INFO scheduler.DAGScheduler: Job 0 finished: foreachPartition at SparkApplication.scala:116, took 418.038651 s&quot;&#10;&#10;got this in one of the tasks&#10; this run took longer than with 1000 partitions (31 mins) and cores are more busy&#10;&#10;```&#10;application_1  | 17/05/30 20:41:00 INFO scheduler.TaskSetManager: Finished task 161.0 in stage 0.0 (TID 161) in 70495 ms on 172.17.0.4 (executor 0) (163/200)&#10;master_1       | 17/05/30 20:41:31 ERROR server.TransportRequestHandler: Error while invoking RpcHandler#receive() on RPC id 8026212994298965842&#10;master_1       | java.io.StreamCorruptedException: invalid type code: 31&#10;```&#10;&#10;Got these errors but no GC or r other kind of errors &#10;&#10;```&#10;application_1  | 17/05/30 20:50:20 INFO scheduler.TaskSetManager: Finished task 193.0 in stage 0.0 (TID 193) in 88089 ms on 172.17.0.4 (executor 0) (195/200)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Starting task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0, partition 199, PROCESS_LOCAL, 5890 bytes)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Finished task 195.0 in stage 0.0 (TID 195) in 67193 ms on 172.17.0.4 (executor 0) (196/200)&#10;application_1  | 17/05/30 20:58:11 ERROR scheduler.TaskSchedulerImpl: Lost executor 0 on 172.17.0.4: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 196.0 in stage 0.0 (TID 196, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 198.0 in stage 0.0 (TID 198, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 197.0 in stage 0.0 (TID 197, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 INFO scheduler.DAGScheduler: Executor lost: 0 (epoch 0)&#10;```&#10;eventually got ths &#10; 17/05/30 21:03:53 WARN scheduler.TaskSetManager: Lost task 199.1 in stage 0.0 (TID 202, 172.17.0.4, executor 1): java.lang.OutOfMemoryError: GC overhead limit exceeded&#10;&#10;&#10;slight refactoring&#10;introduce accumulators to count&#10;" />
     <MESSAGE value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;attempts to fix the memory related errors at the end&#10;https://www.slideshare.net/jcmia1/a-beginners-guide-on-troubleshooting-spark-applications&#10;&#10;trying GC1&#10;&#10;&quot;Exception in thread &quot;dispatcher-event-loop-14&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;`#table_concept_to_atom` scan finishes in 6.8 min with prev version&#10;no GC errors at the end&#10;&#10;(checkpoint) `#table_citation` scan finishes in 7.1 mins with this version&#10;no GC errors&#10;&#10;&quot;17/05/30 13:27:13 INFO scheduler.DAGScheduler: Job 0 finished: foreachPartition at SparkApplication.scala:116, took 418.038651 s&quot;&#10;&#10;got this in one of the tasks&#10; this run took longer than with 1000 partitions (31 mins) and cores are more busy&#10;&#10;```&#10;application_1  | 17/05/30 20:41:00 INFO scheduler.TaskSetManager: Finished task 161.0 in stage 0.0 (TID 161) in 70495 ms on 172.17.0.4 (executor 0) (163/200)&#10;master_1       | 17/05/30 20:41:31 ERROR server.TransportRequestHandler: Error while invoking RpcHandler#receive() on RPC id 8026212994298965842&#10;master_1       | java.io.StreamCorruptedException: invalid type code: 31&#10;```&#10;&#10;Got these errors but no GC or r other kind of errors &#10;&#10;```&#10;application_1  | 17/05/30 20:50:20 INFO scheduler.TaskSetManager: Finished task 193.0 in stage 0.0 (TID 193) in 88089 ms on 172.17.0.4 (executor 0) (195/200)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Starting task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0, partition 199, PROCESS_LOCAL, 5890 bytes)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Finished task 195.0 in stage 0.0 (TID 195) in 67193 ms on 172.17.0.4 (executor 0) (196/200)&#10;application_1  | 17/05/30 20:58:11 ERROR scheduler.TaskSchedulerImpl: Lost executor 0 on 172.17.0.4: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 196.0 in stage 0.0 (TID 196, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 198.0 in stage 0.0 (TID 198, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 197.0 in stage 0.0 (TID 197, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 INFO scheduler.DAGScheduler: Executor lost: 0 (epoch 0)&#10;```&#10;eventually got ths &#10; 17/05/30 21:03:53 WARN scheduler.TaskSetManager: Lost task 199.1 in stage 0.0 (TID 202, 172.17.0.4, executor 1): java.lang.OutOfMemoryError: GC overhead limit exceeded&#10;&#10;&#10;slight refactoring&#10;introduce accumulators to count&#10;&#10;this correctly counts 427686 records" />
     <MESSAGE value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;attempts to fix the memory related errors at the end&#10;https://www.slideshare.net/jcmia1/a-beginners-guide-on-troubleshooting-spark-applications&#10;&#10;trying GC1&#10;&#10;&quot;Exception in thread &quot;dispatcher-event-loop-14&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;`#table_concept_to_atom` scan finishes in 6.8 min with prev version&#10;no GC errors at the end&#10;&#10;(checkpoint) `#table_citation` scan finishes in 7.1 mins with this version&#10;no GC errors&#10;&#10;&quot;17/05/30 13:27:13 INFO scheduler.DAGScheduler: Job 0 finished: foreachPartition at SparkApplication.scala:116, took 418.038651 s&quot;&#10;&#10;got this in one of the tasks&#10; this run took longer than with 1000 partitions (31 mins) and cores are more busy&#10;&#10;```&#10;application_1  | 17/05/30 20:41:00 INFO scheduler.TaskSetManager: Finished task 161.0 in stage 0.0 (TID 161) in 70495 ms on 172.17.0.4 (executor 0) (163/200)&#10;master_1       | 17/05/30 20:41:31 ERROR server.TransportRequestHandler: Error while invoking RpcHandler#receive() on RPC id 8026212994298965842&#10;master_1       | java.io.StreamCorruptedException: invalid type code: 31&#10;```&#10;&#10;Got these errors but no GC or r other kind of errors &#10;&#10;```&#10;application_1  | 17/05/30 20:50:20 INFO scheduler.TaskSetManager: Finished task 193.0 in stage 0.0 (TID 193) in 88089 ms on 172.17.0.4 (executor 0) (195/200)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Starting task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0, partition 199, PROCESS_LOCAL, 5890 bytes)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Finished task 195.0 in stage 0.0 (TID 195) in 67193 ms on 172.17.0.4 (executor 0) (196/200)&#10;application_1  | 17/05/30 20:58:11 ERROR scheduler.TaskSchedulerImpl: Lost executor 0 on 172.17.0.4: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 196.0 in stage 0.0 (TID 196, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 198.0 in stage 0.0 (TID 198, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 197.0 in stage 0.0 (TID 197, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 INFO scheduler.DAGScheduler: Executor lost: 0 (epoch 0)&#10;```&#10;eventually got ths &#10; 17/05/30 21:03:53 WARN scheduler.TaskSetManager: Lost task 199.1 in stage 0.0 (TID 202, 172.17.0.4, executor 1): java.lang.OutOfMemoryError: GC overhead limit exceeded&#10;&#10;&#10;slight refactoring&#10;introduce accumulators to count&#10;&#10;this correctly counts 427686 records&#10;&#10;this correctly counts 19929833 records&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;attempts to fix the memory related errors at the end&#10;https://www.slideshare.net/jcmia1/a-beginners-guide-on-troubleshooting-spark-applications&#10;&#10;trying GC1&#10;&#10;&quot;Exception in thread &quot;dispatcher-event-loop-14&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;`#table_concept_to_atom` scan finishes in 6.8 min with prev version&#10;no GC errors at the end&#10;&#10;(checkpoint) `#table_citation` scan finishes in 7.1 mins with this version&#10;no GC errors&#10;&#10;&quot;17/05/30 13:27:13 INFO scheduler.DAGScheduler: Job 0 finished: foreachPartition at SparkApplication.scala:116, took 418.038651 s&quot;&#10;&#10;got this in one of the tasks&#10; this run took longer than with 1000 partitions (31 mins) and cores are more busy&#10;&#10;```&#10;application_1  | 17/05/30 20:41:00 INFO scheduler.TaskSetManager: Finished task 161.0 in stage 0.0 (TID 161) in 70495 ms on 172.17.0.4 (executor 0) (163/200)&#10;master_1       | 17/05/30 20:41:31 ERROR server.TransportRequestHandler: Error while invoking RpcHandler#receive() on RPC id 8026212994298965842&#10;master_1       | java.io.StreamCorruptedException: invalid type code: 31&#10;```&#10;&#10;Got these errors but no GC or r other kind of errors &#10;&#10;```&#10;application_1  | 17/05/30 20:50:20 INFO scheduler.TaskSetManager: Finished task 193.0 in stage 0.0 (TID 193) in 88089 ms on 172.17.0.4 (executor 0) (195/200)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Starting task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0, partition 199, PROCESS_LOCAL, 5890 bytes)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Finished task 195.0 in stage 0.0 (TID 195) in 67193 ms on 172.17.0.4 (executor 0) (196/200)&#10;application_1  | 17/05/30 20:58:11 ERROR scheduler.TaskSchedulerImpl: Lost executor 0 on 172.17.0.4: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 196.0 in stage 0.0 (TID 196, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 198.0 in stage 0.0 (TID 198, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 197.0 in stage 0.0 (TID 197, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 INFO scheduler.DAGScheduler: Executor lost: 0 (epoch 0)&#10;```&#10;eventually got ths &#10; 17/05/30 21:03:53 WARN scheduler.TaskSetManager: Lost task 199.1 in stage 0.0 (TID 202, 172.17.0.4, executor 1): java.lang.OutOfMemoryError: GC overhead limit exceeded&#10;&#10;&#10;slight refactoring&#10;introduce accumulators to count&#10;&#10;this correctly counts 427686 records&#10;&#10;this correctly counts 19929833 records&#10;" />
+    <MESSAGE value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;attempts to fix the memory related errors at the end&#10;https://www.slideshare.net/jcmia1/a-beginners-guide-on-troubleshooting-spark-applications&#10;&#10;trying GC1&#10;&#10;&quot;Exception in thread &quot;dispatcher-event-loop-14&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;`#table_concept_to_atom` scan finishes in 6.8 min with prev version&#10;no GC errors at the end&#10;&#10;(checkpoint) `#table_citation` scan finishes in 7.1 mins with this version&#10;no GC errors&#10;&#10;&quot;17/05/30 13:27:13 INFO scheduler.DAGScheduler: Job 0 finished: foreachPartition at SparkApplication.scala:116, took 418.038651 s&quot;&#10;&#10;got this in one of the tasks&#10; this run took longer than with 1000 partitions (31 mins) and cores are more busy&#10;&#10;```&#10;application_1  | 17/05/30 20:41:00 INFO scheduler.TaskSetManager: Finished task 161.0 in stage 0.0 (TID 161) in 70495 ms on 172.17.0.4 (executor 0) (163/200)&#10;master_1       | 17/05/30 20:41:31 ERROR server.TransportRequestHandler: Error while invoking RpcHandler#receive() on RPC id 8026212994298965842&#10;master_1       | java.io.StreamCorruptedException: invalid type code: 31&#10;```&#10;&#10;Got these errors but no GC or r other kind of errors &#10;&#10;```&#10;application_1  | 17/05/30 20:50:20 INFO scheduler.TaskSetManager: Finished task 193.0 in stage 0.0 (TID 193) in 88089 ms on 172.17.0.4 (executor 0) (195/200)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Starting task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0, partition 199, PROCESS_LOCAL, 5890 bytes)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Finished task 195.0 in stage 0.0 (TID 195) in 67193 ms on 172.17.0.4 (executor 0) (196/200)&#10;application_1  | 17/05/30 20:58:11 ERROR scheduler.TaskSchedulerImpl: Lost executor 0 on 172.17.0.4: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 196.0 in stage 0.0 (TID 196, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 198.0 in stage 0.0 (TID 198, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 197.0 in stage 0.0 (TID 197, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 INFO scheduler.DAGScheduler: Executor lost: 0 (epoch 0)&#10;```&#10;eventually got ths &#10; 17/05/30 21:03:53 WARN scheduler.TaskSetManager: Lost task 199.1 in stage 0.0 (TID 202, 172.17.0.4, executor 1): java.lang.OutOfMemoryError: GC overhead limit exceeded&#10;&#10;&#10;slight refactoring&#10;introduce accumulators to count&#10;&#10;this correctly counts 427686 records&#10;&#10;this correctly counts 19929833 records&#10;&#10;refactoring&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding mysql jar to Spark&#10;query core-db&#10;&#10;works if using this from host &#10;```&#10;sshuttle -l 0.0.0.0 --dns -r nick@o.scivulcan.com:5500 192.81.130.200/32&#10;```&#10;&quot;java.lang.ClassNotFoundException: com.mysql.jdbc.Driver&quot;&#10;&#10;add mysql dependency to original semantive images&#10;&#10;adding mysql jdbc connector to application itself (instead)&#10;&#10;runs !&#10;&#10;run on `http://ds-db3.scivulcan.com`&#10; Job 0 finished: foreach at SparkApplication.scala:69, took 275.692546 s&#10;&#10;another run for the `#table_citation` : fails at the end&#10;&quot;Lost task 999.0 in stage 0.0 (TID 999, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;this version results in this error quite quickly: likely tried to bring large results in RAM &#10;&quot; Lost task 66.0 in stage 0.0 (TID 66, 172.17.0.4, executor 0): java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;previous version ran successfully on `#table_citation`&#10;&#10;attempts to fix the memory related errors at the end&#10;https://www.slideshare.net/jcmia1/a-beginners-guide-on-troubleshooting-spark-applications&#10;&#10;trying GC1&#10;&#10;&quot;Exception in thread &quot;dispatcher-event-loop-14&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded&quot;&#10;&#10;`#table_concept_to_atom` scan finishes in 6.8 min with prev version&#10;no GC errors at the end&#10;&#10;(checkpoint) `#table_citation` scan finishes in 7.1 mins with this version&#10;no GC errors&#10;&#10;&quot;17/05/30 13:27:13 INFO scheduler.DAGScheduler: Job 0 finished: foreachPartition at SparkApplication.scala:116, took 418.038651 s&quot;&#10;&#10;got this in one of the tasks&#10; this run took longer than with 1000 partitions (31 mins) and cores are more busy&#10;&#10;```&#10;application_1  | 17/05/30 20:41:00 INFO scheduler.TaskSetManager: Finished task 161.0 in stage 0.0 (TID 161) in 70495 ms on 172.17.0.4 (executor 0) (163/200)&#10;master_1       | 17/05/30 20:41:31 ERROR server.TransportRequestHandler: Error while invoking RpcHandler#receive() on RPC id 8026212994298965842&#10;master_1       | java.io.StreamCorruptedException: invalid type code: 31&#10;```&#10;&#10;Got these errors but no GC or r other kind of errors &#10;&#10;```&#10;application_1  | 17/05/30 20:50:20 INFO scheduler.TaskSetManager: Finished task 193.0 in stage 0.0 (TID 193) in 88089 ms on 172.17.0.4 (executor 0) (195/200)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Starting task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0, partition 199, PROCESS_LOCAL, 5890 bytes)&#10;application_1  | 17/05/30 20:51:06 INFO scheduler.TaskSetManager: Finished task 195.0 in stage 0.0 (TID 195) in 67193 ms on 172.17.0.4 (executor 0) (196/200)&#10;application_1  | 17/05/30 20:58:11 ERROR scheduler.TaskSchedulerImpl: Lost executor 0 on 172.17.0.4: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 196.0 in stage 0.0 (TID 196, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 199.0 in stage 0.0 (TID 199, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 198.0 in stage 0.0 (TID 198, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 WARN scheduler.TaskSetManager: Lost task 197.0 in stage 0.0 (TID 197, 172.17.0.4, executor 0): ExecutorLostFailure (executor 0 exited caused by one of the running tasks) Reason: Remote RPC client disassociated. Likely due to containers exceeding thresholds, or network issues. Check driver logs for WARN messages.&#10;application_1  | 17/05/30 20:58:11 INFO scheduler.DAGScheduler: Executor lost: 0 (epoch 0)&#10;```&#10;eventually got ths &#10; 17/05/30 21:03:53 WARN scheduler.TaskSetManager: Lost task 199.1 in stage 0.0 (TID 202, 172.17.0.4, executor 1): java.lang.OutOfMemoryError: GC overhead limit exceeded&#10;&#10;&#10;slight refactoring&#10;introduce accumulators to count&#10;&#10;this correctly counts 427686 records&#10;&#10;this correctly counts 19929833 records&#10;&#10;refactoring&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1589,17 +2265,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sbt-application/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/semantive/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
           <caret line="44" column="23" lean-forward="false" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.1.0-sources.jar!/org/apache/spark/sql/Dataset.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="43035">
+          <caret line="2314" column="22" lean-forward="false" selection-start-line="2314" selection-start-column="6" selection-end-line="2314" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#832#862#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.1.0-sources.jar!/org/apache/spark/sql/DataFrameReader.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1387">
+          <caret line="102" column="13" lean-forward="false" selection-start-line="102" selection-start-column="2" selection-end-line="102" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#817#844#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1611,39 +2302,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.1.0-sources.jar!/org/apache/spark/sql/DataFrameReader.scala">
+    <entry file="file://$PROJECT_DIR$/sbt-application/build.sbt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="102" column="13" lean-forward="false" selection-start-line="102" selection-start-column="2" selection-end-line="102" selection-end-column="13" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#817#844#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.1.0-sources.jar!/org/apache/spark/sql/Dataset.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="2314" column="22" lean-forward="false" selection-start-line="2314" selection-start-column="6" selection-end-line="2314" selection-end-column="22" />
+        <state relative-caret-position="247">
+          <caret line="17" column="48" lean-forward="false" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/Partitioning.scala">
+    <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-streaming-kafka_2.11/srcs/spark-streaming-kafka_2.11-1.6.3-sources.jar!/org/apache/spark/streaming/kafka/KafkaInputDStream.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        <state relative-caret-position="235">
+          <caret line="67" column="19" lean-forward="false" selection-start-line="67" selection-start-column="6" selection-end-line="67" selection-end-column="19" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#844#871#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.spark/spark-streaming-kafka_2.11/srcs/spark-streaming-kafka_2.11-1.6.3-sources.jar!/org/apache/spark/streaming/kafka/KafkaUtils.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="43" column="7" lean-forward="false" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/SparkApplication.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="63" column="10" lean-forward="false" selection-start-line="63" selection-start-column="10" selection-end-line="63" selection-end-column="10" />
+        <state relative-caret-position="344">
+          <caret line="63" column="0" lean-forward="false" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/sbt-application/project/.ivy/cache/org.apache.kafka/kafka-clients/srcs/kafka-clients-0.8.2.1-sources.jar!/org/apache/kafka/clients/producer/KafkaProducer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="91" column="43" lean-forward="false" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sbt-application/src/main/scala-2.11/Partitioning.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="40" column="18" lean-forward="false" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
+          <folding>
+            <element signature="e#1#89#0" expanded="true" />
           </folding>
         </state>
       </provider>

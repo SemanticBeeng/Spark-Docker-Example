@@ -1,3 +1,5 @@
+
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
 import org.apache.spark.sql.Row
 
 
@@ -15,11 +17,53 @@ case class TablePartitioning(name :String, fetchSize: Int, partitionColumn: Stri
 }
 
 object Partitioning {
-  def inspect(r: Row): Unit = {
+
+//  import org.apache.spark.streaming._
+//
+//  def makeScc(conf : SparkConf) = {
+//    val ssc = new StreamingContext(conf, Seconds(2))
+//
+//    //val topicMap = topics.split(",").map((_, numThreads.toInt)).toMap
+//    val zkQuorum = "123"
+//    val topics = "ccore_db"
+//    val groupId = "group1"
+//    val numThreads = 3
+//    val topicMap = topics.split(",").map((_, numThreads)).toMap
+//    //val lines: ReceiverInputDStream[(String, String)] = KafkaUtils.createStream(ssc, zkQuorum, groupId , topicMap)//.map(_._2)
+//    ssc
+//  }
+
+  val kafkaOpTopic = "coredb-output"
+
+  /**
+    * https://docs.cloud.databricks.com/docs/latest/databricks_guide/07%20Spark%20Streaming/09%20Write%20Output%20To%20Kafka.html
+    */
+  def makeProducer = {
+    val kafkaBrokers = "localhost:9092"
+    import ProducerConfig._
+//    val props = java.util.HashMap[String, Object]()
+//    props.put(BOOTSTRAP_SERVERS_CONFIG, kafkaBrokers)
+//      VALUE_SERIALIZER_CLASS_CONFIG → "org.apache.kafka.common.serialization.StringSerializer",
+//      KEY_SERIALIZER_CLASS_CONFIG → "org.apache.kafka.common.serialization.StringSerializer").top
+    val props = new java.util.HashMap[String, Object]()
+    props.put(BOOTSTRAP_SERVERS_CONFIG, kafkaBrokers)
+    props.put(VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
+    props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
+
+    new KafkaProducer[String, String](props)
+  }
+
+  def tomMessage(data: String) = {
+    new ProducerRecord[String, String](kafkaOpTopic, null, data)
+  }
+
+  def process(producer: KafkaProducer[String, String], r: Row): Unit = {
     val id = r.getInt(0)
     //val name = r.getString(1)
     println(s"$id")
     //(id, name)
+
+    tomMessage(r.toString())
   }
 
   private val numPartitions = 1000

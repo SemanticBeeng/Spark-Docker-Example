@@ -22,6 +22,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: aopalliance:aopalliance:1.0:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.apache.spark:spark-streaming-kafka_2.11:1.6.3:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.apache.kafka:kafka_2.11:0.8.2.1:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.apache.kafka:kafka-clients:0.8.2.1:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: com.yammer.metrics:metrics-core:2.2.0:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: com.101tec:zkclient:0.3:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: xmlenc:xmlenc:0.52:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: oro:oro:2.0.8:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: org.xerial.snappy:snappy-java:1.1.2.6:jar" level="project" />
@@ -154,5 +159,6 @@
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.esotericsoftware:kryo-shaded:3.0.3:jar" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="SBT: com.clearspring.analytics:stream:2.7.0:jar" level="project" />
     <orderEntry type="library" name="SBT: mysql:mysql-connector-java:6.0.6:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.apache.spark:spark-streaming_2.11:2.1.0:jar" level="project" />
   </component>
 </module>
