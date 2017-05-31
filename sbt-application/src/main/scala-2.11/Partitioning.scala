@@ -39,22 +39,21 @@ object Partitioning {
     * https://docs.cloud.databricks.com/docs/latest/databricks_guide/07%20Spark%20Streaming/09%20Write%20Output%20To%20Kafka.html
     */
   def makeProducer = {
+
     val kafkaBrokers = "localhost:9092"
+
     import ProducerConfig._
-//    val props = java.util.HashMap[String, Object]()
-//    props.put(BOOTSTRAP_SERVERS_CONFIG, kafkaBrokers)
-//      VALUE_SERIALIZER_CLASS_CONFIG → "org.apache.kafka.common.serialization.StringSerializer",
-//      KEY_SERIALIZER_CLASS_CONFIG → "org.apache.kafka.common.serialization.StringSerializer").top
-    val props = new java.util.HashMap[String, Object]()
-    props.put(BOOTSTRAP_SERVERS_CONFIG, kafkaBrokers)
-    props.put(VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
-    props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
+    import scala.collection.JavaConverters._
+    val props = Map[String, Object](
+      BOOTSTRAP_SERVERS_CONFIG → kafkaBrokers,
+      VALUE_SERIALIZER_CLASS_CONFIG → "org.apache.kafka.common.serialization.StringSerializer",
+      KEY_SERIALIZER_CLASS_CONFIG → "org.apache.kafka.common.serialization.StringSerializer").asJava
 
     new KafkaProducer[String, String](props)
   }
 
-  def tomMessage(data: String) = {
-    new ProducerRecord[String, String](kafkaOpTopic, null, data)
+  def send(producer: KafkaProducer[String, String], data: String) = {
+    producer.send(new ProducerRecord[String, String](kafkaOpTopic, null, data))
   }
 
   def process(producer: KafkaProducer[String, String], r: Row): Unit = {
@@ -63,7 +62,7 @@ object Partitioning {
     println(s"$id")
     //(id, name)
 
-    producer.send(tomMessage(r.toString()))
+    send(producer, r.toString())
   }
 
   private val numPartitions = 1000
