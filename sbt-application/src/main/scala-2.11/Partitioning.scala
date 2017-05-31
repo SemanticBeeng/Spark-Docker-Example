@@ -63,7 +63,7 @@ object Partitioning {
     println(s"$id")
     //(id, name)
 
-    tomMessage(r.toString())
+    producer.send(tomMessage(r.toString()))
   }
 
   private val numPartitions = 1000
